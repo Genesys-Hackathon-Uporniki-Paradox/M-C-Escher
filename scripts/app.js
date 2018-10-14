@@ -77,9 +77,15 @@ if (navigator.mediaDevices.getUserMedia) {
       soundClips.appendChild(clipContainer);
 
       audio.controls = true;
-      var blob = new Blob(chunks, { 'type' : 'audio/ogg; codecs=opus' });
+      var blob = new Blob(chunks, { 'type' : 'audio/mpeg' });
       chunks = [];
       var audioURL = window.URL.createObjectURL(blob);
+      var reader = new FileReader();
+      reader.readAsDataURL(blob);
+      reader.onloadend = function() {
+        console.log(reader.result);
+      };
+      console.log(reader.result);
       audio.src = audioURL;
       console.log("recorder stopped");
 
