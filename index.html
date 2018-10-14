@@ -14,7 +14,7 @@
 
     <script>
         function initializeWebPage() {
-            genesys.wwe.service.subscribe(["agent", "interaction", "media", "system", "markdone"], eventHandler, this);
+            genesys.wwe.service.subscribe(["interaction"], eventHandler, this);
         }
 
         function eventHandler(message) {
@@ -23,7 +23,16 @@
                     log("Received agent event: " + JSON.stringify(message, null, "\t"));
                     break;
                 case "interaction":
-                    log("Received interaction event: " + JSON.stringify(message, null, "\t"));
+                    //log("Received interaction event: " + JSON.stringify(message, null, "\t"));
+                    if (message.data.interaction) {
+                        if (message.data.interaction.state === 'TALKING' 
+                        && message.data.interaction.previousState === 'RINGING') {
+                            log('I\'m Talking');
+                            // activate UI here
+                            document.getElementById('button-play').click();   
+                        }
+                    }
+
                     break;
                 case "markdone":
                     log("Received markdone event: " + JSON.stringify(message, null, "\t"));
@@ -61,7 +70,7 @@
 title: "MCEscher Suggestion",\n\
 iconUrl: "https://cdn1.iconfinder.com/data/icons/free-social-media-12/32/RSS_social_media-128.png",\n\
 subject: "You are doing great! Just try one of the options:",\n\
-message: "'+response+'\\r\\n",\n\
+message: "'+ response + '\\r\\n",\n\
 buttons: [ "Dismiss" ],\n\
 buttonShowDismiss: true,\n\
 autoCloseTimeout: 20000,\n\
@@ -79,7 +88,7 @@ sendToMyMessage: true\n\
 </head>
 
 <body onload="initializeWebPage()">
-    <div id="output" style="display:none">
+    <div id="output">
 
     </div>
     <h1>Web Speech API</h1>
