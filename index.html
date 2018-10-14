@@ -113,6 +113,25 @@
                     if (event.results[i].isFinal) {
                         transcription.textContent = event.results[i][0].transcript +
                             ' (Confidence: ' + event.results[i][0].confidence + ')';
+                        const url = 'http://locahost:3000/question/text'
+                        fetch(url, {
+                            method: 'post',
+                            headers: {
+                                "Content-type": "application/json; charset=UTF-8"
+                            },
+                            body: JSON.stringify({
+                                'queryText': event.results[i][0].transcript,
+                                'languageCode': "en-US"
+                            })
+                        })
+                            .then(response => response.json())
+                            .then(function (data) {
+                                console.log('Request succeeded with JSON response', data);
+                            })
+                            .catch(function (error) {
+                                console.log('Request failed', error);
+                            });
+
                     } else {
                         transcription.textContent += event.results[i][0].transcript;
                     }
