@@ -73,3 +73,22 @@ textarea {
     overflow-y: scroll;
     width: 100%;
 }
+
+.recognition-options {
+   list-style: none;
+   padding: 0;
+}
+
+.recognition-options li {
+   display: inline;
+}
+
+fieldset {
+   border: 0;
+   margin: 0.5em 0;
+   padding: 0;
+}
+
+legend {
+   padding: 0;
+}
