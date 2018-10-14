@@ -2,43 +2,6 @@
  *  JS goes here
  */
 
-function initializeWebPage() {
-    genesys.wwe.service.subscribe(["agent", "interaction", "media", "system", "markdone"], eventHandler, this);
-}
-
-function eventHandler(message) {
-    switch (message.event) {
-        case "agent":
-            log("Received agent event: " + JSON.stringify(message, null, "\t"));
-            break;
-        case "interaction":
-            log("Received interaction event: " + JSON.stringify(message, null, "\t"));
-            break;
-        case "markdone":
-            log("Received markdone event: " + JSON.stringify(message, null, "\t"));
-            break;
-        case "media":
-            log("Received media event: " + JSON.stringify(message, null, "\t"));
-            break;
-        case "system":
-            log("Received system event: " + JSON.stringify(message, null, "\t"));
-            break;
-
-        default:
-    }
-}
-
-function log(text) {
-    var divOutput = document.getElementById("output");
-    divOutput.innerHTML = "<pre>" + text + "</pre><br/>" + divOutput.innerHTML;
-}
-
-function logEvent(string) {
-    var log = document.getElementById('log');
-
-    log.innerHTML = string + '<br />' + log.innerHTML;
-}
-
 window.SpeechRecognition = window.SpeechRecognition ||
     window.webkitSpeechRecognition ||
     null;
@@ -52,6 +15,31 @@ if (!SpeechRecognition) {
 } else {
     var recognizer = new SpeechRecognition();
     var transcription = document.getElementById('transcription');
+
+
+    function startReconition() {
+        transcription.textContent = '';
+
+        // Set if we need interim results
+        var isInterimResults = document.querySelector('input[name="recognition-type"][value="interim"]').checked;
+
+        recognizer.lang = document.getElementById('language').value;
+        recognizer.continuous = !isInterimResults;
+        recognizer.interimResults = isInterimResults;
+
+        try {
+            recognizer.start();
+            logEvent('Recognition started');
+        } catch (ex) {
+            logEvent('Recognition error: ' + ex.message);
+        }
+    }
+
+    function stopRecognition() {
+        console.log('*** Stopping');
+        recognizer.stop();
+        logEvent('Recognition stopped');
+    }
 
     // Start recognising
     recognizer.addEventListener('result', function (event) {
@@ -73,8 +61,9 @@ if (!SpeechRecognition) {
                     })
                 })
                     .then(response => response.json())
-                    .then(function (data) {
+                    .then((data) => {
                         console.log('Request succeeded with JSON response:', data.response);
+                        showCommand('system.popupToast', data.response);
                     })
                     .catch(function (error) {
                         console.log('Request failed', error);
@@ -95,28 +84,12 @@ if (!SpeechRecognition) {
         logEvent('Recognition ended');
     });
 
-    document.getElementById('button-play').addEventListener('click', function () {
-        transcription.textContent = '';
 
-        // Set if we need interim results
-        var isInterimResults = document.querySelector('input[name="recognition-type"][value="interim"]').checked;
 
-        recognizer.lang = document.getElementById('language').value;
-        recognizer.continuous = !isInterimResults;
-        recognizer.interimResults = isInterimResults;
+    document.getElementById('button-play').addEventListener('click', startReconition);
 
-        try {
-            recognizer.start();
-            logEvent('Recognition started');
-        } catch (ex) {
-            logEvent('Recognition error: ' + ex.message);
-        }
-    });
 
-    document.getElementById('button-stop').addEventListener('click', function () {
-        recognizer.stop();
-        logEvent('Recognition stopped');
-    });
+    document.getElementById('button-stop').addEventListener('click', stopRecognition);
 
     document.getElementById('clear-all').addEventListener('click', function () {
         document.getElementById('log').textContent = '';
