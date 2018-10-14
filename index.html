@@ -25,11 +25,11 @@
                 case "interaction":
                     //log("Received interaction event: " + JSON.stringify(message, null, "\t"));
                     if (message.data.interaction) {
-                        if (message.data.interaction.state === 'TALKING' 
-                        && message.data.interaction.previousState === 'RINGING') {
+                        if (message.data.interaction.state === 'TALKING'
+                            && message.data.interaction.previousState === 'RINGING') {
                             log('I\'m Talking');
                             // activate UI here
-                            document.getElementById('button-play').click();   
+                            document.getElementById('button-play').click();
                         }
                     }
 
@@ -91,7 +91,7 @@ sendToMyMessage: true\n\
     <div id="output">
 
     </div>
-    <h1>Web Speech API</h1>
+    <h1>MCEscher - Client agent assest</h1>
 
     <p hidden class="js-api-support">API not supported</p>
 
@@ -124,9 +124,9 @@ sendToMyMessage: true\n\
             <button onclick="showCommand('system.popupToast')">system.popupToast</button>
         </form>
 
-        <h2>Log</h2>
-        <div id="log" class="log"></div>
-        <button id="clear-all" class="button">Clear log</button>
+        <h2 style="display:none">Log</h2>
+        <div style="display:none" id="log" class="log"></div>
+        <button style="display:none" id="clear-all" class="button">Clear log</button>
     </div>
     <script src="scripts/main.js"></script>
 </body>
