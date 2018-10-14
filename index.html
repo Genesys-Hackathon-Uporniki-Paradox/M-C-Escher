@@ -12,11 +12,74 @@
 
     <script src="scripts/wwe-service-client-api.js"></script>
 
+    <script>
+        function initializeWebPage() {
+            genesys.wwe.service.subscribe(["agent", "interaction", "media", "system", "markdone"], eventHandler, this);
+        }
+
+        function eventHandler(message) {
+            switch (message.event) {
+                case "agent":
+                    log("Received agent event: " + JSON.stringify(message, null, "\t"));
+                    break;
+                case "interaction":
+                    log("Received interaction event: " + JSON.stringify(message, null, "\t"));
+                    break;
+                case "markdone":
+                    log("Received markdone event: " + JSON.stringify(message, null, "\t"));
+                    break;
+                case "media":
+                    log("Received media event: " + JSON.stringify(message, null, "\t"));
+                    break;
+                case "system":
+                    log("Received system event: " + JSON.stringify(message, null, "\t"));
+                    break;
+
+                default:
+            }
+        }
+
+        function log(text) {
+            var divOutput = document.getElementById("output");
+            divOutput.innerHTML = "<pre>" + text + "</pre><br/>" + divOutput.innerHTML;
+        }
+
+        function logEvent(string) {
+            var log = document.getElementById('log');
+
+            log.innerHTML = string + '<br />' + log.innerHTML;
+        }
+        function succeeded(result) { log("SUCCEEDED, result: " + JSON.stringify(result, null, "\t")); }
+
+        function failed(result) { log("FAILED, result: " + JSON.stringify(result, null, "\t")); }
+
+        function showCommand(commandName, response) {
+            var command = "", commandHelp = "";
+            switch (commandName) {
+                case "system.popupToast":
+                    command = 'genesys.wwe.service.system.popupToast({\n\
+title: "MCEscher Suggestion",\n\
+iconUrl: "https://cdn1.iconfinder.com/data/icons/free-social-media-12/32/RSS_social_media-128.png",\n\
+subject: "You are doing great! Just try one of the options:",\n\
+message: "'+response+'\\r\\n",\n\
+buttons: [ "Dismiss" ],\n\
+buttonShowDismiss: true,\n\
+autoCloseTimeout: 20000,\n\
+sendToMyMessage: true\n\
+}, succeeded, failed)';
+                    commandHelp = "Popup a customizable toast.";
+                    break;
+            }
+            eval(command);
+            event.preventDefault();
+        }
+    </script>
+
     <title>M-C-Escher</title>
 </head>
 
 <body onload="initializeWebPage()">
-    <div id="output">
+    <div id="output" style="display:none">
 
     </div>
     <h1>Web Speech API</h1>
@@ -49,6 +112,7 @@
 
             <button type="button" id="button-play" class="button">Play demo</button>
             <button type="button" id="button-stop" class="button">Stop demo</button>
+            <button onclick="showCommand('system.popupToast')">system.popupToast</button>
         </form>
 
         <h2>Log</h2>
