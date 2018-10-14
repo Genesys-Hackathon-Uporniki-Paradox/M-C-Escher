@@ -7,6 +7,8 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
     <link rel="stylesheet" href="styles/main.css">
+    <link href="styles/app.css" rel="stylesheet" type="text/css">
+    <link href="styles/install-button.css" rel="stylesheet" type="text/css">
 
     <script src="scripts/wwe-service-client-api.js"></script>
     <script src="scripts/main.js"></script>
@@ -18,6 +20,37 @@
     <div id="output">
 
     </div>
+    <div class="wrapper">
+
+        <header>
+            <h1>Web dictaphone</h1>
+        </header>
+
+        <section class="main-controls">
+            <canvas class="visualizer" height="60px"></canvas>
+            <div id="buttons">
+                <button class="record">Record</button>
+                <button class="stop">Stop</button>
+            </div>
+        </section>
+
+        <section class="sound-clips">
+
+
+        </section>
+
+    </div>
+
+    <label for="toggle">❔</label>
+    <input type="checkbox" id="toggle">
+
+
+    <!-- <script src="scripts/install.js"></script> -->
+
+    <script src="scripts/mediaDevices-getUserMedia-polyfill.js"></script>
+
+    <!-- Below is your custom application script -->
+    <script src="scripts/app.js"></script>
 </body>
 
 </html>
