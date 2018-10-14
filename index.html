@@ -19,7 +19,7 @@
     <div id="output">
 
     </div>
-    <h1>Web Speech API</h1>
+    <h1>MCEscher - Client agent assest</h1>
 
     <p hidden class="js-api-support">API not supported</p>
 
@@ -28,10 +28,10 @@
         <textarea aria-label="Transcription" id="transcription" class="log" readonly></textarea>
 
         <form action="" method="get">
-            <label for="language">Language:</label>
-            <input type="text" id="language" name="language" value="en-US" />
+            <label style="display:none" for="language">Language:</label>
+            <input style="display:none" type="text" id="language" name="language" value="en-US" />
 
-            <fieldset>
+            <fieldset style="display:none">
                 <legend>Results:</legend>
                 <ul class="recognition-options">
                     <li>
@@ -47,13 +47,13 @@
                 </ul>
             </fieldset>
 
-            <button type="button" id="button-play" class="button">Play demo</button>
-            <button type="button" id="button-stop" class="button">Stop demo</button>
+            <button type="button" id="button-play" class="button">Start Recording</button>
+            <button type="button" id="button-stop" class="button">Stop Recording</button>
         </form>
 
-        <h2>Log</h2>
+        <!-- <h2>Log</h2>
         <div id="log" class="log"></div>
-        <button id="clear-all" class="button">Clear log</button>
+        <button id="clear-all" class="button">Clear log</button> -->
     </div>
     <script src="scripts/main.js"></script>
 </body>
