@@ -87,21 +87,21 @@ if (!SpeechRecognition) {
     });
 
     // Listen for errors
-    recognizer.addEventListener('error', function (event) {
-        logEvent('Recognition error: ' + event.message);
-    });
+    // recognizer.addEventListener('error', function (event) {
+    //     logEvent('Recognition error: ' + event.message);
+    // });
 
-    recognizer.addEventListener('end', function () {
-        logEvent('Recognition ended');
-    });
+    // recognizer.addEventListener('end', function () {
+    //     logEvent('Recognition ended');
+    // });
 
     document.getElementById('button-play').addEventListener('click', function () {
         transcription.textContent = '';
 
         // Set if we need interim results
-        var isInterimResults = document.querySelector('input[name="recognition-type"][value="interim"]').checked;
+        var isInterimResults = true; //document.querySelector('input[name="recognition-type"][value="interim"]').checked;
 
-        recognizer.lang = document.getElementById('language').value;
+        recognizer.lang = 'en-US' //document.getElementById('language').value;
         recognizer.continuous = !isInterimResults;
         recognizer.interimResults = isInterimResults;
 

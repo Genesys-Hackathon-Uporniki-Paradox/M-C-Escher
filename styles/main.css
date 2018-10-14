@@ -15,9 +15,11 @@ html {
 }
 
 body {
-    max-width: 500px;
-    margin: 2em auto;
+    max-width: 100%;
+    margin: 1em auto;
     padding: 0 0.5em;
+    background-color: #fff;
+    padding: 2em;
 }
 
 h1 {
